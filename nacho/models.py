@@ -5,7 +5,7 @@ from django.db import models
 class Restaurant(models.Model):
 	created = models.DateTimeField(auto_now_add=True)
 	modified = models.DateTimeField(auto_now=True)
-	name = models.CharField(max_length="80")
+	name = models.CharField(max_length="100")
 	phone = models.CharField(max_length="15")
 	address = models.CharField(max_length="200")
 	city = models.CharField(max_length="80")
