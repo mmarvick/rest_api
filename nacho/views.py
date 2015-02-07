@@ -16,8 +16,18 @@ class RestaurantViewSet(viewsets.ModelViewSet):
 		latitude = self.request.QUERY_PARAMS.get('latitude', None)
 		longitude = self.request.QUERY_PARAMS.get('longitude', None)
 		distance = self.request.QUERY_PARAMS.get('distance', None)
-		if latitude is not None:
-			queryset = queryset.filter(latitude=latitude)
-		if longitude is not None:
-			queryset = queryset.filter(longitude=longitude)
+		queryset = self.search(queryset, latitude, longitude, distance)
+		return queryset
+
+	def search(self, queryset, latitude, longitude, distance):
+		if latitude is None or longitude is None:
+			return queryset
+		try:
+			distance = float(distance)
+		except:
+			distance = 5
+
+		dsq = distance * distance
+		queryset = queryset.extra(where=["(latitude - %s) * (latitude - %s) + (longitude - %s) * (longitude - %s) <= %s"], 
+			params=[latitude, latitude, longitude, longitude, dsq])
 		return queryset
