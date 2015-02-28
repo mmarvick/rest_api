@@ -21,4 +21,4 @@ class Restaurant(models.Model):
 		ordering = ('created',)
 
 	def save(self, *args, **kwargs):
-		super(Restaurant, self).save
+		super(Restaurant, self).save(*args, **kwargs)
