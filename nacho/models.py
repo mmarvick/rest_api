@@ -15,6 +15,7 @@ class Restaurant(models.Model):
 	longitude = models.FloatField()
 	happyHourStart = models.DateTimeField()
 	happyHourEnd = models.DateTimeField()
+	createdBy = models.ForeignKey('auth.User', related_name='restaurants')
 
 	class Meta:
 		ordering = ('created',)

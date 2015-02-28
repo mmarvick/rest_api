@@ -3,6 +3,9 @@ from nacho.serializers import RestaurantSerializer
 from rest_framework import viewsets
 from rest_framework.decorators import list_route
 from rest_framework.response import Response
+from django.contrib.auth.models import User
+from nacho.serializers import UserSerializer
+from rest_framework import permissions
 
 # Create your views here.
 class RestaurantViewSet(viewsets.ModelViewSet):
@@ -10,6 +13,8 @@ class RestaurantViewSet(viewsets.ModelViewSet):
 	# We do this, even though get_queryset is used, so that we can
 	# generate the base_name
 	queryset = Restaurant.objects.none()
+	# Permission settings for accessing Restaurants
+	permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
 
 	def get_queryset(self):
 		queryset = Restaurant.objects.all()
@@ -31,3 +36,10 @@ class RestaurantViewSet(viewsets.ModelViewSet):
 		queryset = queryset.extra(where=["(latitude - %s) * (latitude - %s) + (longitude - %s) * (longitude - %s) <= %s"], 
 			params=[latitude, latitude, longitude, longitude, dsq])
 		return queryset
+
+class UserViewSet(viewsets.ReadOnlyModelViewSet):
+    """
+    This viewset automatically provides `list` and `detail` actions.
+    """
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
