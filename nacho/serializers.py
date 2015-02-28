@@ -3,10 +3,13 @@ from nacho.models import Restaurant
 from django.contrib.auth.models import User
 
 class RestaurantSerializer(serializers.HyperlinkedModelSerializer):
+	createdBy = serializers.ReadOnlyField(source="createdBy.username")
+	
 	class Meta:
 		model = Restaurant
-		fields = ('url', 'name', 'phone', 'address', 'city', 'stateProvince', 'zip', 'latitude', 'longitude', 'happyHourStart', 'happyHourEnd')
-		owner = serializers.HiddenField(default='owner.username')
+		fields = ('url', 'createdBy', 'name', 'phone', 'address', 'city',
+				 'stateProvince', 'zip', 'latitude', 'longitude',
+				  'happyHourStart', 'happyHourEnd')
 
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
@@ -14,4 +17,4 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
 
 	class Meta:
 		model = User
-		fields = ('id', 'username', 'restaurants')
+		fields = ('url', 'username', 'is_superuser', 'restaurants')

@@ -37,7 +37,10 @@ class RestaurantViewSet(viewsets.ModelViewSet):
 			params=[latitude, latitude, longitude, longitude, dsq])
 		return queryset
 
-class UserViewSet(viewsets.ReadOnlyModelViewSet):
+	def perform_create(self, serializer):
+   		serializer.save(createdBy=self.request.user)
+
+class UserViewSet(viewsets.ModelViewSet):
     """
     This viewset automatically provides `list` and `detail` actions.
     """
