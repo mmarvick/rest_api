@@ -15,7 +15,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Restaurant',
             fields=[
-                ('id', models.AutoField(verbose_name='ID', primary_key=True, serialize=False, auto_created=True)),
+                ('id', models.AutoField(serialize=False, primary_key=True, auto_created=True, verbose_name='ID')),
                 ('created', models.DateTimeField(auto_now_add=True)),
                 ('modified', models.DateTimeField(auto_now=True)),
                 ('name', models.CharField(max_length='100')),
@@ -28,7 +28,7 @@ class Migration(migrations.Migration):
                 ('longitude', models.FloatField()),
                 ('happyHourStart', models.DateTimeField()),
                 ('happyHourEnd', models.DateTimeField()),
-                ('createdBy', models.ForeignKey(to=settings.AUTH_USER_MODEL, related_name='restaurants')),
+                ('createdBy', models.ForeignKey(related_name='restaurants', to=settings.AUTH_USER_MODEL)),
             ],
             options={
                 'ordering': ('created',),
