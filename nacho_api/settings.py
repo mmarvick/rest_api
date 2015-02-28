@@ -99,6 +99,7 @@ STATICFILES_DIRS = (
 )
 
 # Parse database configuration from $DATABASE_URL
+# note: this setting must be commented out to run locally.
 DATABASES['default'] =  dj_database_url.config()
 
 # Honor the 'X-Forwarded-Proto' header for request.is_secure()

@@ -15,6 +15,10 @@ class Restaurant(models.Model):
 	longitude = models.FloatField()
 	happyHourStart = models.DateTimeField()
 	happyHourEnd = models.DateTimeField()
+	createdBy = models.ForeignKey('auth.User', related_name='restaurants')
 
 	class Meta:
 		ordering = ('created',)
+
+	def save(self, *args, **kwargs):
+		super(Restaurant, self).save(*args, **kwargs)
