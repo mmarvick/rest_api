@@ -6,12 +6,12 @@ class RestaurantSerializer(serializers.HyperlinkedModelSerializer):
 	class Meta:
 		model = Restaurant
 		fields = ('url', 'name', 'phone', 'address', 'city', 'stateProvince', 'zip', 'latitude', 'longitude', 'happyHourStart', 'happyHourEnd')
-		owner = serializers.HiddenField(source='owner.username')
+		owner = serializers.HiddenField(default='owner.username')
 
 
-class UserSerializer(serializer.HyperlinkedModelSerializer):
-	restaraunt = serializers.PrimaryKeyRelatedField(many=True, querset=Restraunt.objects.all())
+class UserSerializer(serializers.HyperlinkedModelSerializer):
+	restaurants = serializers.PrimaryKeyRelatedField(many=True, queryset=Restaurant.objects.all())
 
 	class Meta:
 		model = User
-		fields = ('id', 'username', 'restaraunts')
+		fields = ('id', 'username', 'restaurants')
