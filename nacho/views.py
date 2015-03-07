@@ -50,8 +50,8 @@ class RestaurantViewSet(customviewsets.HeadedModelViewSet):
 			except:
 				distance = 5
 
-			self.latitude = latitude
-			self.longitude = longitude
+			self.latitude = float(latitude)
+			self.longitude = float(longitude)
 			self.distance = distance
 
 	def search(self, queryset):
